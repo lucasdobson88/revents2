@@ -3,7 +3,6 @@ import { Grid, Button } from 'semantic-ui-react';
 import EventList from '../EventList/EventList';
 import EventForm from '../EventForm/EventForm';
 import cuid from 'cuid';
-import { throwStatement } from '@babel/types';
 
 class EventDashboard extends Component {
   state = {
@@ -45,37 +44,13 @@ class EventDashboard extends Component {
     });
   };
 
-  handleUpdateEvent = updatedEvent => {
-    this.setState(({ events }) => ({
-      events: events.map(event => {
-        if (event.id === updatedEvent.id) {
-          return { ...updatedEvent };
-        } else {
-          return event;
-        }
-      }),
-      isOpen: false,
-      selectedEvent: null
-    }));
-  };
-
-  handleDeleteEvent = id => {
-    this.setState(({ events }) => ({
-      events: events.filter(event => event.id !== id)
-    }));
-  };
-
   render() {
     const { events, isOpen, selectedEvent } = this.state;
     return (
       <div>
         <Grid>
           <Grid.Column width={10}>
-            <EventList
-              deleteEvent={this.handleDeleteEvent}
-              selectEvent={this.handleSelectEvent}
-              events={events}
-            />
+            <EventList selectEvent={this.handleSelectEvent} events={events} />
           </Grid.Column>
 
           <Grid.Column width={6}>
@@ -86,8 +61,6 @@ class EventDashboard extends Component {
             />
             {isOpen && (
               <EventForm
-                key={selectedEvent ? selectedEvent.id : 0}
-                updateEvent={this.handleUpdateEvent}
                 selectedEvent={selectedEvent}
                 createEvent={this.handleCreateEvent}
                 cancelFormOpen={this.handleFormCancel}
