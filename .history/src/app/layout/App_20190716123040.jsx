@@ -17,7 +17,7 @@ class App extends Component {
         <Route exact path="/" component={HomePage} />
         <Route
           path="/(.+)"
-          render={() => (
+          render={() => {
             <Fragment>
               <NavBar />
               <Container className="main">
@@ -28,8 +28,8 @@ class App extends Component {
                 <Route path="/settings" component={SettingsDashboard} />
                 <Route path="/createEvent" component={EventForm} />
               </Container>
-            </Fragment>
-          )}
+            </Fragment>;
+          }}
         />
       </Fragment>
     );
